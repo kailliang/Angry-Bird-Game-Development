@@ -29,17 +29,37 @@ class DraggedImageView: UIImageView {
         
         
         
-        newCenter.x = min(self.superview!.bounds.width/2 + 40, newCenter.x)
-        newCenter.x = max(self.superview!.bounds.width/2 - 40, newCenter.x)
+        newCenter.x = min(self.bounds.midX + 100, newCenter.x)
+        newCenter.x = max(self.bounds.midX, newCenter.x)
         //let halfy = self.bounds.midY
-        newCenter.y = max(self.bounds.midY+20, newCenter.y)
-        newCenter.y = min(self.bounds.midY+100, newCenter.y)
+        newCenter.y = max(self.superview!.bounds.height / 2 - 50, newCenter.y)
+        newCenter.y = min(self.superview!.bounds.height / 2 + 50, newCenter.y)
         
         
         self.center = newCenter
 
         self.myDelegate?.changeSomething()
     }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    
+        // aim goes back after shooting------------------------
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseInOut, animations:
+            {
+            () -> Void in
+            
+            self.center = CGPoint(x: self.bounds.midX + 50, y: self.superview!.bounds.height / 2)
+            
+            }, completion: { (success) -> Void in
+                
+            })
+        //--------------------------------------
+        
+        
+        
+    }
+
+    
+    
     
 }
 
